@@ -4,3 +4,4 @@ logs/
 .project
 .classpath
 **/*.csv
+**/.Rhistory

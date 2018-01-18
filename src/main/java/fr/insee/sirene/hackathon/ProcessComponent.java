@@ -8,11 +8,14 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class ProcessComponent {
 
+	// TODO Move in a Configuration class
 	public static String ROOT_FOLDER = "D:/Programmes/Java/Hackathon Sirene";
 	public static String PROCESS_ROOT_FOLDER = ROOT_FOLDER + "/process"; // TODO Ugly
 	public static String SOURCE_ROOT_FOLDER =  ROOT_FOLDER + "/src/main"; // TODO Ugly
-	public static String rScript = "C:\\Program Files\\R\\R-3.3.2\\bin\\x64\\Rscript.exe";
 	public static String SOURCE_RP_2017 = "src/main/resources/data/rp_final_2017.csv";
+
+	public static String R_SCRIPT = "C:\\Program Files\\R\\R-3.3.2\\bin\\x64\\Rscript.exe";
+	public static String PYTHON_EXE = "C:\\Users\\Franck\\AppData\\Local\\Programs\\Python\\Python36\\python.exe";
 
 	public static String DEFAULT_IN_DATA = "in-data.csv";
 	public static String DEFAULT_IN_PARAM = "in-param.csv";
@@ -28,6 +31,8 @@ public abstract class ProcessComponent {
 	String outData = null;
 	String inParam = null;
 	String outParam = null;
+
+	boolean active = true;
 
 	public ProcessComponent() {}
 
@@ -45,6 +50,10 @@ public abstract class ProcessComponent {
 	 * @throws Exception
 	 */
 	public void execute() throws Exception {
+		if (!this.active) {
+			logger.info("Ce composant est inactivé, exécution interrompue");
+			return;
+		}
 		if (this.inData != null) {
 			// Move file to local directory under standard name
 			String destinationDataFile = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_DATA;
@@ -113,5 +122,13 @@ public abstract class ProcessComponent {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
 	}
 }

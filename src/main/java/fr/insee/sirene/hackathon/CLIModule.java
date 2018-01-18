@@ -23,6 +23,8 @@ public class CLIModule extends ProcessModule {
 
 		super.execute(); // Rapatrie les fichiers in-data et in-param vers leurs emplacements par défault
 
+		if (!active) return;
+
 		String workingDirectory = SOURCE_ROOT_FOLDER + "/" + language.getPathElement() + "/" + this.path;
 		logger.debug("Lancement de la ligne de commande " + commandLine + " dans le répertoire de travail " + workingDirectory);
 

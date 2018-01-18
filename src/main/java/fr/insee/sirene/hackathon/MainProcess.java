@@ -22,7 +22,7 @@ public class MainProcess extends ProcessComponent {
 
 	@Override
 	public void execute() throws Exception {
-		for (ProcessStep step : steps) {
+		if (active) for (ProcessStep step : steps) {
 			step.execute();
 		}
 	}

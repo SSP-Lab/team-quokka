@@ -22,16 +22,28 @@ public class ProcessExecution {
 		ProcessStep requetage = new ProcessStep();
 		ProcessStep scoring = new ProcessStep();
 		ProcessStep evaluation = new ProcessStep();
+		evaluation.setName("Évaluation");
+		evaluation.setPath("evaluation");
+
 
 		CLIModule lectureRecensement = new CLIModule(Language.R);
 		lectureRecensement.setName("Lecture du fichier RP 2017");
 		lectureRecensement.setPath("lecture/lecture-rp");
-		String processPath = ProcessComponent.PROCESS_ROOT_FOLDER + "/" + lectureRecensement.getPath();
 		lectureRecensement.setInData(ProcessComponent.SOURCE_RP_2017);
-		lectureRecensement.setCommandLine("\"" + ProcessComponent.rScript + "\" lecture-rp.R \"" + processPath + "\"");
+		String processPath = ProcessComponent.PROCESS_ROOT_FOLDER + "/" + lectureRecensement.getPath();
+		lectureRecensement.setCommandLine("\"" + ProcessComponent.R_SCRIPT + "\" lecture-rp.R \"" + processPath + "\"");
+		lectureRecensement.setActive(false);
+
+		CLIModule evaluationAPI = new CLIModule(Language.PYTHON);
+		evaluationAPI.setName("Soumission à l'API d'évaluation");
+		evaluationAPI.setPath("evaluation/evaluation-api");
+		evaluationAPI.setCommandLine("\"" + ProcessComponent.PYTHON_EXE + "\" eval_api.py");
 
 		lecture.addModule(lectureRecensement);
+		evaluation.addModule(evaluationAPI);
+
 		process.addStep(lecture);
+		process.addStep(evaluation);
 
 		try {
 			process.execute();

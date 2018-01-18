@@ -20,7 +20,7 @@ public class ProcessStep extends ProcessComponent {
 
 	@Override
 	public void execute() throws Exception {
-		for (ProcessModule module : modules) {
+		if (active) for (ProcessModule module : modules) {
 			module.execute();
 		}
 	}
