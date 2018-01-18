@@ -12,9 +12,15 @@ BAN_URL = "http://api-ban.hackathon.insee.eu/search?"
 df = pd.read_csv(
     "../../../../../process/requetage/geocodage-ban/in-data.csv", 
     sep=";",
+    index_col=False,
     dtype={
         "Siret": np.object_,
-        "LibelleVoieEtablissement": np.object_
+        "NumeroVoieEtablissement": np.object_,
+        "IndiceRepetitionEtablissement": np.object_,
+        "CodePostalEtablissement": np.object_,
+        "LibelleVoieEtablissement": np.object_,
+        "DistributionSpecialeEtablissement": np.object_,
+        "CodeCommuneEtablissement": np.object_
     })
 
 def to_ban_query(adresse):
@@ -27,11 +33,11 @@ def ban_requete(q):
         # on prend les coordonnees de la premiere feature, a priori celle qui a le plus haut score
         bon_resultat = data["features"][0]
         coords = bon_resultat["geometry"]["coordinates"]
-        x = coords[0]
-        y = coords[1]
+        x = bon_resultat["properties"]["x"]
+        y = bon_resultat["properties"]["y"]
         return (x, y)
     else:
-        print("req not ok")
+        #print("req not ok")
         return ("NA", "NA")
 
 def none_to_empty(cell):
@@ -44,6 +50,7 @@ def make_adress(row): # FAIL
     jj = str.join(" ", str(row))
     print(jj)
     return jj
+
 
 sub_df = df[VARS]
 sub_df = sub_df.applymap(none_to_empty)
@@ -78,4 +85,4 @@ df["SIRENE_Y"] = ys
 
 print(df.head)
 
-df.to_csv("../../../../../process/requetage/geocodage-ban/out-data.csv")
+df.to_csv("../../../../../process/requetage/geocodage-ban/out-data.csv", sep=";")
