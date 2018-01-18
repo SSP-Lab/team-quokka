@@ -1,7 +1,6 @@
 package fr.insee.sirene.hackathon;
 
 import java.io.File;
-import java.io.IOException;
 
 public class CLIModule extends ProcessModule {
 

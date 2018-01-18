@@ -10,8 +10,12 @@ public class ProcessStep extends ProcessComponent {
 		super(inData, outData, inParam, outParam);
 	}
 
+	public ProcessStep() {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
-	public void execute() {
+	public void execute() throws Exception {
 		for (ProcessModule module : modules) {
 			module.execute();
 		}

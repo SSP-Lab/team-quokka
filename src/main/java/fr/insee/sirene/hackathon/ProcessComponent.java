@@ -7,6 +7,10 @@ public abstract class ProcessComponent {
 	String inParam = null;
 	String outParam = null;
 
+	public ProcessComponent() {
+
+	}
+
 	public ProcessComponent(String inData, String outData, String inParam, String outParam) {
 		super();
 		this.inData = inData;
