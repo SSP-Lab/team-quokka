@@ -1,8 +1,14 @@
 package fr.insee.sirene.hackathon;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class MainProcess extends ProcessComponent {
+
+	public static Logger logger = LogManager.getLogger(MainProcess.class);
 
 	private List<ProcessStep> steps = null;
 
@@ -25,13 +31,13 @@ public class MainProcess extends ProcessComponent {
 		return steps;
 	}
 
-	public void addStep(ProcessStep step) {
-		this.steps.add(step);
-	}
-
 	public void setSteps(List<ProcessStep> steps) {
 		this.steps = steps;
 	}
 
-
+	public void addStep(ProcessStep step) {
+		if (this.steps == null) this.steps = new ArrayList<ProcessStep>();
+		logger.debug("Ajout de l'étape " + step.getName() + " au processus principal");
+		this.steps.add(step);
+	}
 }

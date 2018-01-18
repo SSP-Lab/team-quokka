@@ -1,9 +1,13 @@
 rm(list = ls())
 options(stringsAsFactors = F)
-install.packages(dplyr)
-library(dplyr)
+#install.packages("dplyr")
+suppressPackageStartupMessages(library(dplyr))
 
-setwd("C:/Users/chloe.bertin/Desktop/Hackathon-2018/données/Lecture/")
+args <- commandArgs(trailingOnly = TRUE)
+cat(args, sep = "\n")
+base_dir <- args[1]
+
+setwd(base_dir)
 
 fichier <- read.csv2("in-data.csv",sep = ";",
                      colClasses = "character",as.is = T)
