@@ -1,20 +1,19 @@
 import requests
 
+# -- Constantes
 BASE_URL = "http://api.hackathon.insee.eu/api/"
 UPLOAD_URL = "upload"
-
-TARGET_URL = BASE_URL + UPLOAD_URL
-
 HEADERS = {"token": "quokka"}
 
-files = {'file': ("out-data.csv", open('out-data.csv', 'rb'), "text/csv")}
+# -- Lecture du fichier résultats
+fichier_resultat = open('in-data.csv', 'rb')
+
+files = {'file': ("in-data.csv", fichier_resultat, "text/csv")}
 
 # -- Upload
-
-print("Upload URL: ", TARGET_URL)
-
+TARGET_URL = BASE_URL + UPLOAD_URL
+print("Versement du fichier à l'URL: ", TARGET_URL)
 resp = requests.post(TARGET_URL, headers=HEADERS, files=files)
+print("Status code : ", resp.status_code)
 
-print(resp.status_code)
-print(resp.request.headers)
-print(resp.request.url)
+fichier_resultat.close()
