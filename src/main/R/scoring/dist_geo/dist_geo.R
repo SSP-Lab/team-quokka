@@ -14,7 +14,7 @@ data_path <- "process/scoring/dist_geo"
 #                   colClasses = "character")
 
 
-in_data <- read_delim("process/scoring/dist_geo/in_data.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+in_data <- read_delim(file.path(data_path,"in-data.csv"), ";", escape_double = FALSE, trim_ws = TRUE)
 
 
 
