@@ -6,7 +6,6 @@ setwd("C:/Users/chloe.bertin/Desktop/Hackathon-2018/données/Enrichissement/Comm
 
 fichier <- read.csv2("in-data.csv",sep = ";",
                      colClasses = "character",as.is = T)
-fichier <- fichier[1:100,]
 
 adj <- read.csv("supp-data.csv",sep = ",",
                      colClasses = "character",as.is = T)
