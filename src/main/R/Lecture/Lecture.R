@@ -13,5 +13,5 @@ param <- read.csv2("in-param.csv",sep = ";",
 fichier <- fichier %>%
   select(param$Variables)
 
-write.csv(fichier,"out-data.csv",row.names = F)
+write.csv2(fichier,"out-data.csv",row.names = F)
 
