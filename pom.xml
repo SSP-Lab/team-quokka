@@ -2,7 +2,7 @@
 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.insee.sirene.hackathon</groupId>
-	<artifactId>team-jfe</artifactId>
+	<artifactId>team-quokka</artifactId>
 	<version>0.1</version>
 	<packaging>jar</packaging>
 	<name>Programmes pour le hackathon Sirene</name>
