@@ -34,13 +34,13 @@ public class ProcessExecution {
 		lectureRecensement.setCommandLine("\"" + ProcessComponent.R_SCRIPT + "\" lecture-rp.R \"" + processPath + "\"");
 		lectureRecensement.setActive(false);
 
-		CLIModule evaluationAPI = new CLIModule(Language.PYTHON);
-		evaluationAPI.setName("Soumission à l'API d'évaluation");
-		evaluationAPI.setPath("evaluation/evaluation-api");
-		evaluationAPI.setCommandLine("\"" + ProcessComponent.PYTHON_EXE + "\" eval_api.py");
+		CLIModule soumissionAPI = new CLIModule(Language.PYTHON);
+		soumissionAPI.setName("Soumission à l'API d'évaluation");
+		soumissionAPI.setPath("evaluation/soumission-api");
+		soumissionAPI.setCommandLine("\"" + ProcessComponent.PYTHON_EXE + "\" eval_api.py");
 
 		lecture.addModule(lectureRecensement);
-		evaluation.addModule(evaluationAPI);
+		evaluation.addModule(soumissionAPI);
 
 		process.addStep(lecture);
 		process.addStep(evaluation);
