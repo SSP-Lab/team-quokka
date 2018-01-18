@@ -2,8 +2,9 @@ import pandas as pd
 import requests
 
 url = "https://prototype.api-sirene.insee.fr/ws/siret/"
-inFile = '/home/benoit/hackathon/data/in-data.csv'
-outFile = '/home/benoit/hackathon/data/out-data.csv'
+
+inFile = '../../../../process/requetage/api-sirene-naif/in-data.csv'
+outFile = '../../../../process/requetage/api-sirene-naif/out-data.csv'
 
 with open(inFile, 'r') as fr:
     with open(outFile, 'w') as fw:
