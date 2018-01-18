@@ -11,7 +11,7 @@ with open(inFile, 'r') as fr:
         i=0
         for ligne in fr:
             if(i==0):
-                fw.write('Siret;Denomination;CodeCommuneEtablissement;ComplementAdresseEtablissement;NumeroVoieEtablissement;IndiceRepetitionEtablissement;TypeVoieEtablissement;LibelleVoieEtablissement;CodePostalEtablissement;LibelleCommuneEtablissement;LibelleCommuneEtrangerEtablissement;DistributionSpecialeEtablissement;CedexEtablissement' + ligne)
+                fw.write('Siret;Denomination;CodeCommuneEtablissement;ComplementAdresseEtablissement;NumeroVoieEtablissement;IndiceRepetitionEtablissement;TypeVoieEtablissement;LibelleVoieEtablissement;CodePostalEtablissement;LibelleCommuneEtablissement;LibelleCommuneEtrangerEtablissement;DistributionSpecialeEtablissement;CedexEtablissement;' + ligne)
                 i=i+1
             else:
                 i=i+1
