@@ -1,7 +1,11 @@
 rm(list = ls())
 options(stringsAsFactors = F)
-install.packages(dplyr)
+install.packages("dplyr")
+install.packages("argparse")
 library(dplyr)
+library(argparse)
+
+parser <- ArgumentParser()
 
 setwd("C:/Users/chloe.bertin/Desktop/Hackathon-2018/données/Lecture/")
 
