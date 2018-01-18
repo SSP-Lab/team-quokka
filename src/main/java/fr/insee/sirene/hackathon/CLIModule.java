@@ -1,16 +1,9 @@
 package fr.insee.sirene.hackathon;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
 
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
-import org.apache.jena.rdf.model.Property;
-import org.apache.jena.vocabulary.DCTerms;
 
 public class CLIModule extends ProcessModule {
 
@@ -28,32 +21,17 @@ public class CLIModule extends ProcessModule {
 
 	public void execute() throws Exception {
 
-		super.execute();
-
-//		boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
-//
-//		ProcessBuilder builder = new ProcessBuilder();
-//		if (isWindows) {
-//		    builder.command("cmd.exe", " ", commandLine);
-//		} else {
-//		    builder.command("sh", commandLine);
-//		}
-//		builder.directory(new File(SOURCE_ROOT_FOLDER + "/R/" + this.path));
-//		builder.redirectErrorStream(true);
-//		Process process = builder.start();
-//		// D'après http://www.baeldung.com/run-shell-command-in-java
-//		StreamGobbler streamGobbler = new StreamGobbler(process.getInputStream(), System.out::println);
-//		Executors.newSingleThreadExecutor().submit(streamGobbler);
-//		logger.debug("Lancement de la ligne de commande " + commandLine + " dans le répertoire de travail " + builder.directory().getAbsolutePath());
-//		int exitCode = process.waitFor();
-//		assert exitCode == 0;
+		super.execute(); // Rapatrie les fichiers in-data et in-param vers leurs emplacements par défault
 
 		String workingDirectory = SOURCE_ROOT_FOLDER + "/" + language.getPathElement() + "/" + this.path;
 		logger.debug("Lancement de la ligne de commande " + commandLine + " dans le répertoire de travail " + workingDirectory);
 
 		DefaultExecutor executor = new DefaultExecutor();
 		executor.setWorkingDirectory(new File(workingDirectory));
-		executor.execute(CommandLine.parse(commandLine));
+		executor.execute(CommandLine.parse(commandLine)); // Peut lever une org.apache.commons.exec.ExecuteException
+
+		// Tout s'est bien passé, on renseigne à leur valeur par défaut le nom des fichiers de sortie
+		setOutputsToDefault();
 	}
 
 	public String getCommandLine() {
@@ -62,21 +40,6 @@ public class CLIModule extends ProcessModule {
 
 	public void setCommandLine(String commandLine) {
 		this.commandLine = commandLine;
-	}
-
-	private static class StreamGobbler implements Runnable {
-	    private InputStream inputStream;
-	    private Consumer<String> consumer;
-	 
-	    public StreamGobbler(InputStream inputStream, Consumer<String> consumer) {
-	        this.inputStream = inputStream;
-	        this.consumer = consumer;
-	    }
-	 
-	    @Override
-	    public void run() {
-	        new BufferedReader(new InputStreamReader(inputStream)).lines().forEach(consumer);
-	    }
 	}
 
 	public enum Language {

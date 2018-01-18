@@ -14,6 +14,11 @@ public abstract class ProcessComponent {
 	public static String rScript = "C:\\Program Files\\R\\R-3.3.2\\bin\\x64\\Rscript.exe";
 	public static String SOURCE_RP_2017 = "src/main/resources/data/rp_final_2017.csv";
 
+	public static String DEFAULT_IN_DATA = "in-data.csv";
+	public static String DEFAULT_IN_PARAM = "in-param.csv";
+	public static String DEFAULT_OUT_DATA = "out-data.csv";
+	public static String DEFAULT_OUT_PARAM = "out-param.csv";
+
 	public static Logger logger = LogManager.getLogger(ProcessComponent.class);
 
 	String name = null;
@@ -34,13 +39,32 @@ public abstract class ProcessComponent {
 		this.outParam = outParam;
 	}
 
+	/**
+	 * Opérations préalables à l'exécution effective qui est réalisée dans les classes filles : rappatriement des fichiers en entrée.
+	 * 
+	 * @throws Exception
+	 */
 	public void execute() throws Exception {
 		if (this.inData != null) {
 			// Move file to local directory under standard name
-			String destinationFolder = PROCESS_ROOT_FOLDER + "/" + path + "/in-data.csv";
-			logger.info("Copie du fichier " + inData + " vers " + destinationFolder);
-			FileUtils.copyFile(new File(inData), new File(destinationFolder));
+			String destinationDataFile = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_DATA;
+			logger.info("Copie du fichier " + inData + " vers " + destinationDataFile);
+			FileUtils.copyFile(new File(inData), new File(destinationDataFile));
 		}
+		if (this.inParam != null) {
+			// Move file to local directory under standard name
+			String destinationParamFile = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_PARAM;
+			logger.info("Copie du fichier " + inParam + " vers " + destinationParamFile);
+			FileUtils.copyFile(new File(inParam), new File(destinationParamFile));
+		}
+	}
+
+	/**
+	 * Met à leurs valeurs par défaut les noms des fichiers de sortie.
+	 */
+	public void setOutputsToDefault() {
+		this.outData = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_OUT_DATA;
+		this.outParam = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_OUT_PARAM;
 	}
 
 	public String getInData() {
