@@ -3,6 +3,8 @@ package fr.insee.sirene.hackathon;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import fr.insee.sirene.hackathon.CLIModule.Language;
+
 public class ProcessExecution {
 
 	public static Logger logger = LogManager.getLogger(ProcessExecution.class);
@@ -21,12 +23,12 @@ public class ProcessExecution {
 		ProcessStep scoring = new ProcessStep();
 		ProcessStep evaluation = new ProcessStep();
 
-		CLIModule lectureRecensement = new CLIModule();
+		CLIModule lectureRecensement = new CLIModule(Language.R);
 		lectureRecensement.setName("Lecture du fichier RP 2017");
 		lectureRecensement.setPath("lecture/lecture-rp");
 		String processPath = ProcessComponent.PROCESS_ROOT_FOLDER + "/" + lectureRecensement.getPath();
 		lectureRecensement.setInData(ProcessComponent.SOURCE_RP_2017);
-		lectureRecensement.setCommandLine(ProcessComponent.rScript + " lecture-rp.R " + processPath);
+		lectureRecensement.setCommandLine("\"" + ProcessComponent.rScript + "\" lecture-rp.R \"" + processPath + "\"");
 
 		lecture.addModule(lectureRecensement);
 		process.addStep(lecture);
