@@ -38,7 +38,7 @@ public abstract class ProcessComponent {
 			// Move file to local directory under standard name
 			String destinationFolder = ROOT_FOLDER + "/" + path + "in-data.csv";
 			logger.info("Copie du fichier " + inData + " vers " + destinationFolder);
-			FileUtils.copyFile(new File(inData), new File(destinationFolder));
+			//FileUtils.copyFile(new File(inData), new File(destinationFolder));
 		}
 	}
 

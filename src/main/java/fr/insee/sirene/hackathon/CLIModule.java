@@ -10,6 +10,8 @@ public class CLIModule extends ProcessModule {
 		super(inData, outData, inParam, outParam);
 	}
 
+	public CLIModule() {}
+
 	public void execute() throws Exception {
 
 		boolean isWindows = System.getProperty("os.name").toLowerCase().startsWith("windows");
@@ -25,5 +27,13 @@ public class CLIModule extends ProcessModule {
 		// Si besoin pour connecter les entrées-sorties : http://www.baeldung.com/run-shell-command-in-java
 		int exitCode = process.waitFor();
 		assert exitCode == 0;
+	}
+
+	public String getCommandLine() {
+		return commandLine;
+	}
+
+	public void setCommandLine(String commandLine) {
+		this.commandLine = commandLine;
 	}
 }
