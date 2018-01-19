@@ -14,7 +14,7 @@ fichier <- read.csv2("in-data.csv",sep = ";",
                      colClasses = "character",as.is = T)
 
 
-test <- fichier[,c("RS_X", "Denomination")]
+#test <- fichier[,c("RS_X", "Denomination")]
 
 # test$dist_lv <- stringdist(fichier$RS_X,fichier$Denomination,method="lv")
 # test$dist_osa <- stringdist(fichier$RS_X,fichier$Denomination,method="osa")
@@ -28,15 +28,9 @@ test <- fichier[,c("RS_X", "Denomination")]
 # test$dist_soundex <- stringdist(fichier$RS_X,fichier$Denomination,method="soundex")
 
 
-long_str <- function(v, w) {
-  long <- apply(data.frame(v,w), c(1,2), FUN = length)
-  return(long)
-}
 
-long_str(fichier$RS_X,fichier$Denomination)
 
-length(fichier$RS_X[1])
-
-test$dist_dl_norm <- 1 - stringdist(fichier$RS_X,fichier$Denomination,method="dl") / 
+fichier$dist_dl_norm <- 1 - stringdist(fichier$RS_X,fichier$Denomination,method="dl") / 
   apply(data.frame(nchar(fichier$RS_X),nchar(fichier$Denomination)), 1, FUN = max)
 
+write.csv2(fichier,"out-data.csv",row.names = F)
