@@ -35,12 +35,20 @@ public class ProcessExecution {
 		lectureRecensement.setCommandLine("\"" + Configuration.R_SCRIPT + "\" lecture-rp.R \"" + processPath + "\"");
 		lectureRecensement.setActive(false);
 
+		/** Module d'enrichissement par indicatrice d'égalité des communes de domicile et de travail **/
+		CLIModule egaliteCommunesDomicileTravail = new CLIModule(Language.R);
+		egaliteCommunesDomicileTravail.setName("Enrichissement par indicatrice d'égalité des communes de domicile et de travail");
+		egaliteCommunesDomicileTravail.setPath("egalite-communes-domicile-travail");
+		processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + egaliteCommunesDomicileTravail.getPath();
+		egaliteCommunesDomicileTravail.setCommandLine("\"" + Configuration.R_SCRIPT + "\" Enrichissement code commune.R \"" + processPath + "\"");
+
 		CLIModule soumissionAPI = new CLIModule(Language.PYTHON);
 		soumissionAPI.setName("Soumission à l'API d'évaluation");
 		soumissionAPI.setPath("evaluation/soumission-api");
 		soumissionAPI.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" eval_api.py");
 
 		lecture.addModule(lectureRecensement);
+		enrichissement.addModule(egaliteCommunesDomicileTravail);
 		evaluation.addModule(soumissionAPI);
 
 		process.addStep(lecture);
