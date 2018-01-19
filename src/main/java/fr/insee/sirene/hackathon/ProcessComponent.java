@@ -56,14 +56,14 @@ public abstract class ProcessComponent {
 			// Move file to local directory under standard name
 			String destinationDataFile = Configuration.PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_DATA;
 			logger.info("Copie du fichier " + originFile + " vers " + destinationDataFile);
-			FileUtils.copyFile(new File(inData), new File(destinationDataFile));
+			FileUtils.copyFile(new File(originFile), new File(destinationDataFile));
 			// On laisse inData à null : la prochaine exécution refera une copie.
 		} else {
 			// Rien à faire, on espère que le fichier d'entrée est bien là où on l'attend.
 		}
 		// Même jeu sur le fichier de paramètres
 		originFile = this.inParam;
-		if (originFile == null) {
+		/*if (originFile == null) {
 			ProcessComponent predecessor = this.getPredecessor();
 			if (predecessor != null) originFile = predecessor.getOutParam();
 		}
@@ -71,8 +71,8 @@ public abstract class ProcessComponent {
 			// Move file to local directory under standard name
 			String destinationParamFile = Configuration.PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_PARAM;
 			logger.info("Copie du fichier " + originFile + " vers " + destinationParamFile);
-			FileUtils.copyFile(new File(inParam), new File(destinationParamFile));
-		}
+			FileUtils.copyFile(new File(originFile), new File(destinationParamFile));
+		}*/
 	}
 
 	/**

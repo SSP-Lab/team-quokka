@@ -1,24 +1,31 @@
+from urllib.parse import urlencode
 import pandas as pd
 import requests
+import numpy as np
 
 url = "https://prototype.api-sirene.insee.fr/ws/siret/"
 inFile = "../../../../../process/requetage/api-sirene-naif/in-data.csv"
 outFile = '../../../../../process/requetage/api-sirene-naif/out-data.csv'
 
-df = pd.read_csv(inFile,sep=';')
+df = pd.read_csv(inFile,sep=';', dtype={
+        "DEP_COM_CORR": np.object_})
 
 with open(inFile, 'r') as fr:
     with open(outFile, 'w') as fw:
         i=-1    
-        fw.write('Siret;Denomination;CodeCommuneEtablissement;ComplementAdresseEtablissement;NumeroVoieEtablissement;IndiceRepetitionEtablissement;TypeVoieEtablissement;LibelleVoieEtablissement;CodePostalEtablissement;LibelleCommuneEtablissement;LibelleCommuneEtrangerEtablissement;DistributionSpecialeEtablissement;CedexEtablissement;' + ligne)
         for ligne in fr:
+            if(i==-1):
+                fw.write('Siret;Denomination;CodeCommuneEtablissement;ComplementAdresseEtablissement;NumeroVoieEtablissement;IndiceRepetitionEtablissement;TypeVoieEtablissement;LibelleVoieEtablissement;CodePostalEtablissement;LibelleCommuneEtablissement;LibelleCommuneEtrangerEtablissement;DistributionSpecialeEtablissement;CedexEtablissement;' + ligne)
             if(i>-1):
                 print(i)
                 liste = ligne.rstrip().split(';')
                 # Variable RS_X
-                raison_sociale = df['RS_X'][i]
-                q_param_value = 'Denomination:"'+raison_sociale+'"'
+                raison_sociale = df['RS_X'][i].replace(" ","+").replace("(","").replace(")","")
+                # Variable DEP_COM_CORR
+                code=str(df['DEP_COM_CORR'][i])
+                q_param_value = 'Denomination:'+raison_sociale+' AND CodeCommuneEtablissement:'+code
                 requete_params = {'q':q_param_value}
+                requete_params=urlencode(requete_params)
                 requete = requests.get(url, params=requete_params)
                 print(requete.url)
                 if(requete.status_code!=404):
@@ -59,5 +66,4 @@ with open(inFile, 'r') as fr:
                     CedexEtablissement=""
                     fw.write(Siret + ';' + Denomination + ';' + CodeCommuneEtablissement +';' + ComplementAdresseEtablissement + ';' +NumeroVoieEtablissement + ';' +IndiceRepetitionEtablissement + ';' +TypeVoieEtablissement + ';' +LibelleVoieEtablissement + ';' +CodePostalEtablissement + ';' +LibelleCommuneEtablissement + ';' +LibelleCommuneEtrangerEtablissement + ';' +DistributionSpecialeEtablissement + ';' +CedexEtablissement + ';' +ligne) 
             i=i+1
-
 

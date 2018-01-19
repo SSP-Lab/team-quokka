@@ -2,7 +2,7 @@ rm(list = ls())
 options(stringsAsFactors = F)
 
 suppressPackageStartupMessages(library(tidyr))
-
+suppressPackageStartupMessages(library(dplyr))
 args <- commandArgs(trailingOnly = TRUE)
 cat(args, sep = "\n")
 base_dir <- args[1]

@@ -19,8 +19,14 @@ public class ProcessExecution {
 		lecture.setName("Lecture");
 		lecture.setPath("lecture");
 		ProcessStep enrichissement = new ProcessStep();
+		enrichissement.setName("Enrichissement");
+		enrichissement.setPath("enrichissement");
 		ProcessStep requetage = new ProcessStep();
+		requetage.setName("Requetage");
+		requetage.setPath("Requetage");
 		ProcessStep scoring = new ProcessStep();
+		scoring.setName("Score");
+		scoring.setPath("Score");
 		ProcessStep evaluation = new ProcessStep();
 		evaluation.setName("Évaluation");
 		evaluation.setPath("evaluation");
@@ -33,7 +39,7 @@ public class ProcessExecution {
 		lectureRecensement.setInData(Configuration.SOURCE_RP_2017);
 		String processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + lectureRecensement.getPath();
 		lectureRecensement.setCommandLine("\"" + Configuration.R_SCRIPT + "\" lecture-rp.R \"" + processPath + "\"");
-		lectureRecensement.setActive(false);
+		lectureRecensement.setActive(true);
 
 		/** Module d'enrichissement par indicatrice d'égalité des communes de domicile et de travail **/
 		CLIModule egaliteCommunesDomicileTravail = new CLIModule(Language.R);
@@ -50,16 +56,22 @@ public class ProcessExecution {
 		ajoutCommunesAdjacentes.setCommandLine("\"" + Configuration.R_SCRIPT + "\" ajout-communes-adjacentes.R \"" + processPath + "\"");
 
 		/** Module de requêtage par appel de l'API Sirene **/
-		CLIModule apiSireneNaif = new CLIModule(Language.PYTHON);
+		/*CLIModule apiSireneNaif = new CLIModule(Language.PYTHON);
 		apiSireneNaif.setName("Requêtage naïf de l'API Sirene");
 		apiSireneNaif.setPath("requetage/api-sirene-naif");
 		apiSireneNaif.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" api-sirene-naif.py");
+		*/
+		/** Module de requêtage par appel de l'API Sirene **/
+		CLIModule apiSireneNaif = new CLIModule(Language.PYTHON);
+		apiSireneNaif.setName("Requêtage phonétique de l'API Sirene");
+		apiSireneNaif.setPath("requetage/api-sirene-phonetique");
+		apiSireneNaif.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" api-sirene-phonetique.py");
 
 		/** Module de requêtage par appel de l'API de géocodage de la BAN **/
 		CLIModule apiGeocodageBAN = new CLIModule(Language.PYTHON);
 		apiGeocodageBAN.setName("Requêtage par appel de l'API de géocodage de la BAN");
 		apiGeocodageBAN.setPath("requetage/geocodage-ban");
-		apiGeocodageBAN.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" geocoage-ban.py");
+		apiGeocodageBAN.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" geocodage-ban.py");
 
 		/** Module de scoring par distance géographique **/
 		CLIModule distanceGeo = new CLIModule(Language.R);

@@ -8,7 +8,6 @@ suppressPackageStartupMessages(library(readr))
 args <- commandArgs(trailingOnly = TRUE)
 cat(args, sep = "\n")
 base_dir <- args[1]
-
 setwd(base_dir)
 
 data <- read.csv2("in-data.csv",sep = ";",
@@ -23,6 +22,6 @@ data$dist_geo[is.na(data$dist_geo)] <- 0
 
 
 write.csv2(data,
-           file = file.path(data_path,"out-data.csv"),row.names = F)
+           file = file.path("out-data.csv"),row.names = F)
 
 

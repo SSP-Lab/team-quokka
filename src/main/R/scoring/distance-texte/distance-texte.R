@@ -6,7 +6,6 @@ suppressPackageStartupMessages(library(stringdist))
 args <- commandArgs(trailingOnly = TRUE)
 cat(args, sep = "\n")
 base_dir <- args[1]
-
 setwd(base_dir)
 
 
