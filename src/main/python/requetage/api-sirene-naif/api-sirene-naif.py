@@ -5,17 +5,19 @@ url = "https://prototype.api-sirene.insee.fr/ws/siret/"
 inFile = "../../../../../process/requetage/api-sirene-naif/in-data.csv"
 outFile = '../../../../../process/requetage/api-sirene-naif/out-data.csv'
 
+df = pd.read_csv(inFile,sep=';')
+
 with open(inFile, 'r') as fr:
     with open(outFile, 'w') as fw:
-        i=0
+        i=-1    
+        fw.write('Siret;Denomination;CodeCommuneEtablissement;ComplementAdresseEtablissement;NumeroVoieEtablissement;IndiceRepetitionEtablissement;TypeVoieEtablissement;LibelleVoieEtablissement;CodePostalEtablissement;LibelleCommuneEtablissement;LibelleCommuneEtrangerEtablissement;DistributionSpecialeEtablissement;CedexEtablissement;' + ligne)
         for ligne in fr:
-            if(i==0):
-                fw.write('Siret;Denomination;CodeCommuneEtablissement;ComplementAdresseEtablissement;NumeroVoieEtablissement;IndiceRepetitionEtablissement;TypeVoieEtablissement;LibelleVoieEtablissement;CodePostalEtablissement;LibelleCommuneEtablissement;LibelleCommuneEtrangerEtablissement;DistributionSpecialeEtablissement;CedexEtablissement;' + ligne)
-                i=i+1
-            else:
-                i=i+1
+            if(i>-1):
+                print(i)
                 liste = ligne.rstrip().split(';')
-                q_param_value = 'Denomination:"'+liste[0]+'"'
+                # Variable RS_X
+                raison_sociale = df['RS_X'][i]
+                q_param_value = 'Denomination:"'+raison_sociale+'"'
                 requete_params = {'q':q_param_value}
                 requete = requests.get(url, params=requete_params)
                 print(requete.url)
@@ -56,6 +58,6 @@ with open(inFile, 'r') as fr:
                     DistributionSpecialeEtablissement=""
                     CedexEtablissement=""
                     fw.write(Siret + ';' + Denomination + ';' + CodeCommuneEtablissement +';' + ComplementAdresseEtablissement + ';' +NumeroVoieEtablissement + ';' +IndiceRepetitionEtablissement + ';' +TypeVoieEtablissement + ';' +LibelleVoieEtablissement + ';' +CodePostalEtablissement + ';' +LibelleCommuneEtablissement + ';' +LibelleCommuneEtrangerEtablissement + ';' +DistributionSpecialeEtablissement + ';' +CedexEtablissement + ';' +ligne) 
-      
+            i=i+1
 
 
