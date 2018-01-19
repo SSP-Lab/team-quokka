@@ -38,17 +38,39 @@ public class ProcessExecution {
 		/** Module d'enrichissement par indicatrice d'égalité des communes de domicile et de travail **/
 		CLIModule egaliteCommunesDomicileTravail = new CLIModule(Language.R);
 		egaliteCommunesDomicileTravail.setName("Enrichissement par indicatrice d'égalité des communes de domicile et de travail");
-		egaliteCommunesDomicileTravail.setPath("egalite-communes-domicile-travail");
+		egaliteCommunesDomicileTravail.setPath("enrichissement/egalite-communes-domicile-travail");
 		processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + egaliteCommunesDomicileTravail.getPath();
-		egaliteCommunesDomicileTravail.setCommandLine("\"" + Configuration.R_SCRIPT + "\" Enrichissement code commune.R \"" + processPath + "\"");
+		egaliteCommunesDomicileTravail.setCommandLine("\"" + Configuration.R_SCRIPT + "\" egalite-communes-domicile-travail.R \"" + processPath + "\"");
 
+		/** Module d'enrichissement par ajout des communes adjacentes **/
+		CLIModule ajoutCommunesAdjacentes = new CLIModule(Language.R);
+		ajoutCommunesAdjacentes.setName("Enrichissement par ajout des communes adjacentes");
+		ajoutCommunesAdjacentes.setPath("enrichissement/ajout-communes-adjacentes");
+		processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + ajoutCommunesAdjacentes.getPath();
+		ajoutCommunesAdjacentes.setCommandLine("\"" + Configuration.R_SCRIPT + "\" ajout-communes-adjacentes.R \"" + processPath + "\"");
+
+		/** Module de requêtage par appel de l'API Sirene **/
+		CLIModule apiSireneNaif = new CLIModule(Language.PYTHON);
+		apiSireneNaif.setName("Requêtage naïf de l'API Sirene");
+		apiSireneNaif.setPath("requetage/api-sirene-naif");
+		apiSireneNaif.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" api-sirene-naif.py");
+
+		/** Module de requêtage par appel de l'API de géocodage de la BAN **/
+		CLIModule apiGeocodageBAN = new CLIModule(Language.PYTHON);
+		apiGeocodageBAN.setName("Requêtage par appel de l'API de géocodage de la BAN");
+		apiGeocodageBAN.setPath("requetage/geocodage-ban");
+		apiGeocodageBAN.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" geocoage-ban.py");
+
+		/** Module d'évaluation par soumission à l'API d'évaluation **/
 		CLIModule soumissionAPI = new CLIModule(Language.PYTHON);
 		soumissionAPI.setName("Soumission à l'API d'évaluation");
 		soumissionAPI.setPath("evaluation/soumission-api");
 		soumissionAPI.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" eval_api.py");
 
+		/** Ajout des modules aux étapes **/
 		lecture.addModule(lectureRecensement);
 		enrichissement.addModule(egaliteCommunesDomicileTravail);
+		enrichissement.addModule(ajoutCommunesAdjacentes);
 		evaluation.addModule(soumissionAPI);
 
 		process.addStep(lecture);
