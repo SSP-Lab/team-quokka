@@ -10,7 +10,7 @@ UPLOAD_URL = "upload"
 HEADERS = {"token": "quokka"}
 
 # -- Lecture du fichier résultats
-chemin_fichier = "../../../../process/evaluation/soumission-api/in-data.csv"
+chemin_fichier = "../../../../../process/evaluation/soumission-api/in-data.csv"
 fichier_resultat = open(chemin_fichier, 'rb')
 
 files = {'file': ("in-data.csv", fichier_resultat, "text/csv")}

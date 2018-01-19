@@ -61,7 +61,7 @@ public class CLIModule extends ProcessModule {
 		public String getPathElement() {
 			switch(this) {
 			case R: return "R";
-			case PYTHON: return "Python";
+			case PYTHON: return "python";
 			default: return null;
 			}
 		}
