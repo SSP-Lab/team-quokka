@@ -25,7 +25,7 @@ public class CLIModule extends ProcessModule {
 
 		if (!active) return;
 
-		String workingDirectory = SOURCE_ROOT_FOLDER + "/" + language.getPathElement() + "/" + this.path;
+		String workingDirectory = Configuration.SOURCE_ROOT_FOLDER + "/" + language.getPathElement() + "/" + this.path;
 		logger.debug("Lancement de la ligne de commande " + commandLine + " dans le répertoire de travail " + workingDirectory);
 
 		DefaultExecutor executor = new DefaultExecutor();

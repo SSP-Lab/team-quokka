@@ -15,6 +15,7 @@ public class ProcessModule extends ProcessComponent {
 		super(inData, outData, inParam, outParam);
 	}
 
+	@Override
 	public ProcessModule getPredecessor() {
 		if (this.parent == null) return null;
 		ProcessStep parentStep = (ProcessStep)this.parent;
@@ -26,5 +27,4 @@ public class ProcessModule extends ProcessComponent {
 		if (parentPredecessor == null) return null;
 		return parentPredecessor.getModules().get(parentPredecessor.getModules().size() - 1);
 	}
-
 }

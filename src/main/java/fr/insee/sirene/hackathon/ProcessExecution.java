@@ -29,15 +29,15 @@ public class ProcessExecution {
 		CLIModule lectureRecensement = new CLIModule(Language.R);
 		lectureRecensement.setName("Lecture du fichier RP 2017");
 		lectureRecensement.setPath("lecture/lecture-rp");
-		lectureRecensement.setInData(ProcessComponent.SOURCE_RP_2017);
-		String processPath = ProcessComponent.PROCESS_ROOT_FOLDER + "/" + lectureRecensement.getPath();
-		lectureRecensement.setCommandLine("\"" + ProcessComponent.R_SCRIPT + "\" lecture-rp.R \"" + processPath + "\"");
+		lectureRecensement.setInData(Configuration.SOURCE_RP_2017);
+		String processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + lectureRecensement.getPath();
+		lectureRecensement.setCommandLine("\"" + Configuration.R_SCRIPT + "\" lecture-rp.R \"" + processPath + "\"");
 		lectureRecensement.setActive(false);
 
 		CLIModule soumissionAPI = new CLIModule(Language.PYTHON);
 		soumissionAPI.setName("Soumission à l'API d'évaluation");
 		soumissionAPI.setPath("evaluation/soumission-api");
-		soumissionAPI.setCommandLine("\"" + ProcessComponent.PYTHON_EXE + "\" eval_api.py");
+		soumissionAPI.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" eval_api.py");
 
 		lecture.addModule(lectureRecensement);
 		evaluation.addModule(soumissionAPI);

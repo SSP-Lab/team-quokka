@@ -8,15 +8,6 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class ProcessComponent {
 
-	// TODO Move in a Configuration class
-	public static String ROOT_FOLDER = "D:/Programmes/Java/Hackathon Sirene";
-	public static String PROCESS_ROOT_FOLDER = ROOT_FOLDER + "/process"; // TODO Ugly
-	public static String SOURCE_ROOT_FOLDER =  ROOT_FOLDER + "/src/main"; // TODO Ugly
-	public static String SOURCE_RP_2017 = "src/main/resources/data/rp_final_2017.csv";
-
-	public static String R_SCRIPT = "C:\\Program Files\\R\\R-3.3.2\\bin\\x64\\Rscript.exe";
-	public static String PYTHON_EXE = "C:\\Users\\Franck\\AppData\\Local\\Programs\\Python\\Python36\\python.exe";
-
 	public static String DEFAULT_IN_DATA = "in-data.csv";
 	public static String DEFAULT_IN_PARAM = "in-param.csv";
 	public static String DEFAULT_OUT_DATA = "out-data.csv";
@@ -47,7 +38,7 @@ public abstract class ProcessComponent {
 	}
 
 	/**
-	 * Opérations préalables à l'exécution effective qui est réalisée dans les classes filles : rappatriement des fichiers en entrée.
+	 * Opérations préalables à l'exécution effective qui est réalisée dans les classes filles : rapatriement des fichiers en entrée si nécessaire.
 	 * 
 	 * @throws Exception
 	 */
@@ -56,16 +47,30 @@ public abstract class ProcessComponent {
 			logger.info("Ce composant est inactivé, exécution interrompue");
 			return;
 		}
-		if (this.inData != null) {
-			// Move file to local directory under standard name
-			String destinationDataFile = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_DATA;
-			logger.info("Copie du fichier " + inData + " vers " + destinationDataFile);
-			FileUtils.copyFile(new File(inData), new File(destinationDataFile));
+		String originFile = this.inData;
+		if (originFile == null) { // Le fichier d'entrée n'est pas précisé : on prend par défaut le fichier de sortie du module précédent
+			ProcessComponent predecessor = this.getPredecessor();
+			if (predecessor != null) originFile = predecessor.getOutData();
 		}
-		if (this.inParam != null) {
+		if (originFile != null) {
 			// Move file to local directory under standard name
-			String destinationParamFile = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_PARAM;
-			logger.info("Copie du fichier " + inParam + " vers " + destinationParamFile);
+			String destinationDataFile = Configuration.PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_DATA;
+			logger.info("Copie du fichier " + originFile + " vers " + destinationDataFile);
+			FileUtils.copyFile(new File(inData), new File(destinationDataFile));
+			// On laisse inData à null : la prochaine exécution refera une copie.
+		} else {
+			// Rien à faire, on espère que le fichier d'entrée est bien là où on l'attend.
+		}
+		// Même jeu sur le fichier de paramètres
+		originFile = this.inParam;
+		if (originFile == null) {
+			ProcessComponent predecessor = this.getPredecessor();
+			if (predecessor != null) originFile = predecessor.getOutParam();
+		}
+		if (originFile != null) {
+			// Move file to local directory under standard name
+			String destinationParamFile = Configuration.PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_IN_PARAM;
+			logger.info("Copie du fichier " + originFile + " vers " + destinationParamFile);
 			FileUtils.copyFile(new File(inParam), new File(destinationParamFile));
 		}
 	}
@@ -74,10 +79,14 @@ public abstract class ProcessComponent {
 	 * Met à leurs valeurs par défaut les noms des fichiers de sortie.
 	 */
 	public void setOutputsToDefault() {
-		this.outData = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_OUT_DATA;
-		this.outParam = PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_OUT_PARAM;
+		this.outData = Configuration.PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_OUT_DATA;
+		this.outParam = Configuration.PROCESS_ROOT_FOLDER + "/" + path + "/" + DEFAULT_OUT_PARAM;
 	}
 
+	public ProcessComponent getPredecessor() {
+		return null;
+	}
+	
 	public String getInData() {
 		return inData;
 	}
