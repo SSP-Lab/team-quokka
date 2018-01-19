@@ -65,6 +65,17 @@ sub_df["AdressePourBan"] = sub_df["ComplementAdresseEtablissement"] + " " + \
  sub_df["DistributionSpecialeEtablissement"]+ " " + \
  sub_df["CodeCommuneEtablissement"]
 
+# -- Better solution
+#zs = []
+#for i, row in sub_df.iterrows():
+#    print(row)
+#    v = row.squeeze().str.cat(sep=" ")
+#    zs.append(v)
+
+#sub_df["TEST"] = zs
+#print(sub_df["TEST"])
+# -- 
+
 xs = []
 ys = []
 

@@ -15,7 +15,7 @@ public class Sampler {
 
 		double rate = 0.001;
 
-		String sampleFileName = StringUtils.replace(ProcessComponent.SOURCE_RP_2017, ".csv", "-extrait.csv");
-		Files.write(Paths.get(sampleFileName), (Iterable<String>)Files.lines(Paths.get(ProcessComponent.SOURCE_RP_2017)).filter(line -> random.nextFloat() < rate)::iterator);
+		String sampleFileName = StringUtils.replace(Configuration.SOURCE_RP_2017, ".csv", "-extrait.csv");
+		Files.write(Paths.get(sampleFileName), (Iterable<String>)Files.lines(Paths.get(Configuration.SOURCE_RP_2017)).filter(line -> random.nextFloat() < rate)::iterator);
 	}
 }

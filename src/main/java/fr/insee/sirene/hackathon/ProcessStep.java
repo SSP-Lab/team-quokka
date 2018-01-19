@@ -25,6 +25,7 @@ public class ProcessStep extends ProcessComponent {
 		}
 	}
 
+	@Override
 	public ProcessStep getPredecessor() {
 		if (this.parent == null) return null;
 		MainProcess parentProcess = (MainProcess)this.parent;
