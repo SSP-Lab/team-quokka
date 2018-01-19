@@ -31,11 +31,14 @@ def ban_requete(q):
     if resp.status_code == 200:
         data = resp.json()
         # on prend les coordonnees de la premiere feature, a priori celle qui a le plus haut score
-        bon_resultat = data["features"][0]
-        coords = bon_resultat["geometry"]["coordinates"]
-        x = bon_resultat["properties"]["x"]
-        y = bon_resultat["properties"]["y"]
-        return (x, y)
+        if len(data["features"]) > 0:
+            bon_resultat = data["features"][0]
+            coords = bon_resultat["geometry"]["coordinates"]
+            x = bon_resultat["properties"]["x"]
+            y = bon_resultat["properties"]["y"]
+            return (x, y)
+        else:
+            return ("NA", "NA")
     else:
         #print("req not ok")
         return ("NA", "NA")
