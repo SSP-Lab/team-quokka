@@ -34,6 +34,8 @@ public abstract class ProcessComponent {
 
 	boolean active = true;
 
+	ProcessComponent parent = null;
+
 	public ProcessComponent() {}
 
 	public ProcessComponent(String inData, String outData, String inParam, String outParam) {
@@ -130,5 +132,13 @@ public abstract class ProcessComponent {
 
 	public void setActive(boolean active) {
 		this.active = active;
+	}
+
+	public ProcessComponent getParent() {
+		return parent;
+	}
+
+	public void setParent(ProcessComponent parent) {
+		this.parent = parent;
 	}
 }

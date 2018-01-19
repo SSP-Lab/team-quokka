@@ -25,17 +25,28 @@ public class ProcessStep extends ProcessComponent {
 		}
 	}
 
+	public ProcessStep getPredecessor() {
+		if (this.parent == null) return null;
+		MainProcess parentProcess = (MainProcess)this.parent;
+		List<ProcessStep> siblings = parentProcess.getSteps();
+		int myIndex = siblings.indexOf(this);
+		if (myIndex > 0) return siblings.get(myIndex - 1);
+		return null;
+	}
+
 	public List<ProcessModule> getModules() {
 		return modules;
 	}
 
 	public void setModules(List<ProcessModule> modules) {
 		this.modules = modules;
+		for (ProcessModule module : modules) module.setParent(this);
 	}
 
 	public void addModule(ProcessModule module) {
 		if (this.modules == null) this.modules = new ArrayList<ProcessModule>();
 		logger.debug("Ajout du module " + module.getName() + " à l'étape " + this.name);
 		this.modules.add(module);
+		module.setParent(this);
 	}
 }

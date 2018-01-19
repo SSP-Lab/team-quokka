@@ -33,11 +33,13 @@ public class MainProcess extends ProcessComponent {
 
 	public void setSteps(List<ProcessStep> steps) {
 		this.steps = steps;
+		for (ProcessStep step : steps) step.setParent(this);
 	}
 
 	public void addStep(ProcessStep step) {
 		if (this.steps == null) this.steps = new ArrayList<ProcessStep>();
 		logger.debug("Ajout de l'étape " + step.getName() + " au processus principal");
 		this.steps.add(step);
+		step.setParent(this);
 	}
 }
