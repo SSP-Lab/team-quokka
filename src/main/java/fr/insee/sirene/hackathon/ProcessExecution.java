@@ -26,6 +26,7 @@ public class ProcessExecution {
 		evaluation.setPath("evaluation");
 
 
+		/********************* Module de lecture du fichier RP **************************/
 		CLIModule lectureRecensement = new CLIModule(Language.R);
 		lectureRecensement.setName("Lecture du fichier RP 2017");
 		lectureRecensement.setPath("lecture/lecture-rp");
