@@ -61,19 +61,48 @@ public class ProcessExecution {
 		apiGeocodageBAN.setPath("requetage/geocodage-ban");
 		apiGeocodageBAN.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" geocoage-ban.py");
 
+		/** Module de scoring par distance géographique **/
+		CLIModule distanceGeo = new CLIModule(Language.R);
+		distanceGeo.setName("Scoring par distance géographique");
+		distanceGeo.setPath("scoring/distance-geo");
+		processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + distanceGeo.getPath();
+		distanceGeo.setCommandLine("\"" + Configuration.R_SCRIPT + "\" distance-geo.R \"" + processPath + "\"");
+
+		/** Module de scoring par distance textuelle **/
+		CLIModule distanceTextuelle = new CLIModule(Language.R);
+		distanceTextuelle.setName("Scoring par distance textuelle");
+		distanceTextuelle.setPath("scoring/distance-texte");
+		processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + distanceTextuelle.getPath();
+		distanceTextuelle.setCommandLine("\"" + Configuration.R_SCRIPT + "\" distance-texte.R \"" + processPath + "\"");
+
+		/** Module de scoring final **/
+		CLIModule scoreFinal = new CLIModule(Language.R);
+		scoreFinal.setName("Scoring final");
+		scoreFinal.setPath("scoring/score-final");
+		processPath = Configuration.PROCESS_ROOT_FOLDER + "/" + scoreFinal.getPath();
+		scoreFinal.setCommandLine("\"" + Configuration.R_SCRIPT + "\" score-final.R \"" + processPath + "\"");
+
 		/** Module d'évaluation par soumission à l'API d'évaluation **/
 		CLIModule soumissionAPI = new CLIModule(Language.PYTHON);
 		soumissionAPI.setName("Soumission à l'API d'évaluation");
 		soumissionAPI.setPath("evaluation/soumission-api");
-		soumissionAPI.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" eval_api.py");
+		soumissionAPI.setCommandLine("\"" + Configuration.PYTHON_EXE + "\" soumission-api.py");
 
 		/** Ajout des modules aux étapes **/
 		lecture.addModule(lectureRecensement);
 		enrichissement.addModule(egaliteCommunesDomicileTravail);
 		enrichissement.addModule(ajoutCommunesAdjacentes);
+		requetage.addModule(apiSireneNaif);
+		requetage.addModule(apiGeocodageBAN);
+		scoring.addModule(distanceGeo);
+		scoring.addModule(distanceTextuelle);
+		scoring.addModule(scoreFinal);
 		evaluation.addModule(soumissionAPI);
 
 		process.addStep(lecture);
+		process.addStep(enrichissement);
+		process.addStep(requetage);
+		process.addStep(scoring);
 		process.addStep(evaluation);
 
 		try {
