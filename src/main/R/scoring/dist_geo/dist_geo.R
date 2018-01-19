@@ -11,15 +11,15 @@ base_dir <- args[1]
 
 setwd(base_dir)
 
+data <- read.csv2("in-data.csv",sep = ";",
+                                colClasses = "character",as.is = T)
 
-in_data <- read_delim("in-data.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 
 
-
-data$dist_geo <- 1/(1 + sqrt((as.numeric(data$x) - as.numeric(data$SIRENE_X))^2 + 
+data$dist_geo <- 1/(1 + 0.0001*sqrt((as.numeric(data$x) - as.numeric(data$SIRENE_X))^2 + 
                                (as.numeric(data$y) - as.numeric(data$SIRENE_Y))^2))
   
-
+data$dist_geo[is.na(data$dist_geo)] <- 0
 
 
 write.csv2(data,
