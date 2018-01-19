@@ -16,7 +16,8 @@ in_data <- read_delim("in-data.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 
 
 
-data$dist_geo <- 1/(1 + sqrt((data$x - data$siren_x)^2 + (data$y - data$siren_y)^2))
+data$dist_geo <- 1/(1 + sqrt((as.numeric(data$x) - as.numeric(data$SIRENE_X))^2 + 
+                               (as.numeric(data$y) - as.numeric(data$SIRENE_Y))^2))
   
 
 
