@@ -1,20 +1,18 @@
-library(dplyr)
-library(readr)
-
-
 
 rm(list = ls())
 options(stringsAsFactors = F)
 
-data_path <- "process/scoring/dist_geo"
+suppressPackageStartupMessages(library(dplyr))
+suppressPackageStartupMessages(library(readr))
+
+args <- commandArgs(trailingOnly = TRUE)
+cat(args, sep = "\n")
+base_dir <- args[1]
+
+setwd(base_dir)
 
 
-# 
-# data <- read.csv(file.path(data_path,"in-data.csv"), 
-#                   colClasses = "character")
-
-
-in_data <- read_delim(file.path(data_path,"in-data.csv"), ";", escape_double = FALSE, trim_ws = TRUE)
+in_data <- read_delim("in-data.csv", ";", escape_double = FALSE, trim_ws = TRUE)
 
 
 

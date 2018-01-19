@@ -1,8 +1,13 @@
 rm(list = ls())
 options(stringsAsFactors = F)
-library(tidyr)
 
-setwd("C:/Users/chloe.bertin/Desktop/Hackathon-2018/données/Enrichissement/Communes adjacentes/")
+suppressPackageStartupMessages(library(tidyr))
+
+args <- commandArgs(trailingOnly = TRUE)
+cat(args, sep = "\n")
+base_dir <- args[1]
+
+setwd(base_dir)
 
 fichier <- read.csv2("in-data.csv",sep = ";",
                      colClasses = "character",as.is = T)
@@ -40,3 +45,5 @@ fichier_final <- fichier1 %>%
   bind_rows(fichier2)
 fichier_final <- fichier_final %>%
   arrange(CABBI)
+
+write.csv2(fichier_final,"out-data.csv",row.names = F)
